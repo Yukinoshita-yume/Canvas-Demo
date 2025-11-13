@@ -1,0 +1,19 @@
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import Title from './component/title/title.jsx'
+import Document from './component/document/document.jsx'
+
+function App() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <>
+      <Title />
+      <Document />
+    </>
+  )
+}
+
+export default App
