@@ -2,6 +2,7 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import Toolbar from '../toolbar/toolbar';
 import { Pencil } from '../pencil/pencil.jsx';
+import { Geometric } from '../Geometric/Geometric.jsx';
 import './board.css';
 
 const Board = () => {
@@ -35,6 +36,9 @@ const Board = () => {
 
     if (currentTool === 'pencil') {
       Pencil.draw(ctx, x, y);
+    }else if (currentTool === 'geometric') {
+      
+      Geometric.draw(ctx, x, y, canvas);
     }
    
   }, [ctx, isDrawing, currentTool]);
@@ -52,7 +56,9 @@ const Board = () => {
     // 调用工具的准备函数
     if (currentTool === 'pencil') {
       Pencil.start(ctx, x, y);
-    }
+    }else if (currentTool === 'geometric') {
+    Geometric.start(ctx, x, y);
+  }
     // 立即绘制第一个点
     drawHandler(event); 
   };
