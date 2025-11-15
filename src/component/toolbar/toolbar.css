@@ -1,0 +1,44 @@
+/* Toolbar.css */
+.toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.tool-button {
+  padding: 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.tool-button:hover:not(:disabled) {
+  background-color: #eee;
+}
+
+.tool-button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.tool-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.clear-button {
+  background-color: #dc3545;
+  color: white;
+  border-color: #dc3545;
+}
+
+.clear-button:hover {
+  background-color: #c82333;
+}

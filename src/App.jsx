@@ -4,15 +4,15 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Title from './component/title/title.jsx'
 import Document from './component/document/document.jsx'
+import Board from './component/board/board.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
-      <Title />
-      <Document />
-    </>
+    <div className="App">
+      <Board />
+    </div>
   )
 }
 
