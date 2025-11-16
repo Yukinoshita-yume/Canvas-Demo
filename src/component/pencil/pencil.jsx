@@ -6,8 +6,8 @@
 export const Pencil = {
   
   //设置样式并移动到起始点
-  start: (ctx, x, y) => {
-    ctx.strokeStyle = '#000000'; // 黑色
+  start: (ctx, x, y, color) => {
+    ctx.strokeStyle = color || '#000000'; // 使用传入的颜色，默认黑色
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(x, y);

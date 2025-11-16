@@ -38,12 +38,12 @@ export const Geometric = {
   
   // 鼠标移动时调用：在指定 context 上绘制形状
   // (不再清除画布)
-  draw: (ctx, currentX, currentY) => {
+  draw: (ctx, currentX, currentY, color) => {
     const width = currentX - startX;
     const height = currentY - startY;
    
     // 绘制形状
-    ctx.strokeStyle = '#0000ff'; 
+    ctx.strokeStyle = color || '#0000ff'; 
     ctx.lineWidth = 2;  
     ctx.beginPath(); //重新开始路径
     // ---------------------------------------------

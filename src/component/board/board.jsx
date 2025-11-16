@@ -4,10 +4,8 @@ import Toolbar from '../toolbar/toolbar';
 import { Pencil } from '../pencil/pencil.jsx';
 import { Geometric } from '../Geometric/Geometric.jsx';
 import { Undo } from '../Undo/Undo.jsx';
-// ---------------------------------------------
-// 1. 导入 TempBoard
-// ---------------------------------------------
-import TempBoard from '../tempboard/tempboard.jsx'; // 假设路径正确
+import TempBoard from '../tempboard/tempboard.jsx';
+
 import './board.css';
 
 const Board = () => {
@@ -27,15 +25,17 @@ const Board = () => {
   const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
   const [canUndo, setCanUndo] = useState(false);
 
+  const [currentColor, setCurrentColor] = useState('#000000'); 
+
+ 
   // 初始化 Canvas Context
   useEffect(() => {
     const canvas = canvasRef.current;
     const tempCanvas = tempCanvasRef.current;
 
     if (canvas && tempCanvas) {
-      // ---------------------------------------------
-      // 4. 统一设置主画布和临时画布
-      // ---------------------------------------------
+      // 统一设置主画布和临时画布
+
       const rect = canvas.getBoundingClientRect();
       const dpi = window.devicePixelRatio;
 
@@ -67,9 +67,7 @@ const Board = () => {
   
   // 绘图处理函数
   const drawHandler = useCallback((event) => {
-    // ---------------------------------------------
-    // 5. 确保 tempCtx 也存在
-    // ---------------------------------------------
+
     if (!ctx || !tempCtx || !isDrawing) return;
 
     const canvas = canvasRef.current;
@@ -81,18 +79,15 @@ const Board = () => {
       Pencil.draw(ctx, x, y); // 在主画布上绘制
 
     } else if (currentTool === 'geometric') {
-      // ---------------------------------------------
-      // 6. 在临时画布上绘制预览
-      // ---------------------------------------------
       
-      // 6a. 清除临时画布 (使用存储的逻辑尺寸)
+      // 清除临时画布 (使用存储的逻辑尺寸)
       tempCtx.clearRect(0, 0, canvasSize.width, canvasSize.height);
 
-      // 6b. 在临时画布上绘制形状
-      Geometric.draw(tempCtx, x, y); 
+      //在临时画布上绘制形状
+      Geometric.draw(tempCtx, x, y, currentColor); 
     }
    
-  }, [ctx, tempCtx, isDrawing, currentTool, canvasSize]); // 添加依赖项
+  }, [ctx, tempCtx, isDrawing, currentTool, canvasSize,currentColor]); // 添加依赖项
 
 
   const startDrawing = (event) => {
@@ -108,10 +103,10 @@ const Board = () => {
     // 7. 根据工具选择 Ctx
     // ---------------------------------------------
     if (currentTool === 'pencil') {
-      Pencil.start(ctx, x, y); // 在主画布上开始
+      Pencil.start(ctx, x, y, currentColor); // 在主画布上开始
       Pencil.draw(ctx, x, y);  // 铅笔立即绘制第一个点
     } else if (currentTool === 'geometric') {
-      Geometric.start(tempCtx, x, y); // 在临时画布上开始
+      Geometric.start(tempCtx, x, y, currentColor); // 在临时画布上开始
     }
   };
 
@@ -132,7 +127,7 @@ const Board = () => {
       const y = event.clientY - rect.top;
       
       // 8c. 在主画布 (ctx) 上绘制最终形状
-      Geometric.draw(ctx, x, y);
+      Geometric.draw(ctx, x, y, currentColor);
     }
 
     // ---------------------------------------------
@@ -146,7 +141,13 @@ const Board = () => {
     ctx.beginPath(); 
   };
 
-  // --- 工具栏功能 (不变) ---
+  // --- 工具栏功能 ---
+
+
+  // 新增颜色处理函数
+  const handleColorChange = (newColor) => {
+    setCurrentColor(newColor);
+  };
 
   const handleClear = () => {
     if (ctx) {
@@ -179,7 +180,9 @@ const Board = () => {
         onToolChange={handleToolChange} 
         onClear={handleClear} 
         currentTool={currentTool}
-        onUndo={handleUndo}    
+        onUndo={handleUndo}
+        currentColor={currentColor}
+        onColorChange={handleColorChange}    
       />
       {/* --------------------------------------------- */}
       {/* 10. 使用相对定位的 wrapper 包裹两个画布 */}

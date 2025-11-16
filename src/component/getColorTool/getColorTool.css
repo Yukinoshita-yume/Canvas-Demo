@@ -1,0 +1,57 @@
+/* getColorTool.css */
+
+.color-tool-wrapper {
+  /* 使用 flex 布局来确保 input 元素在 
+    .toolbar (它也是 flex) 中正确对齐 
+  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-picker-native-input {
+  /* 模拟 .tool-button 的样式 */
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  /* 设定一个固定尺寸，使其与其他按钮高度(约36px)保持一致 
+    (padding 8px*2 + 字体高度) 
+  */
+  width: 50px;
+  height: 36px;
+  
+  /* <input type="color"> 的 padding 比较特殊，
+    这里的值是为了让色块居中
+  */
+  padding: 4px;
+  box-sizing: border-box; /* 确保 padding 不会撑大 H/W */
+  
+  transition: border-color 0.2s;
+}
+
+.color-picker-native-input:hover {
+  background-color: #eee; /* 匹配 .tool-button:hover */
+  border-color: #aaa;
+}
+
+/* 美化 WebKit 浏览器 (Chrome, Safari, Edge) 
+  内部的 "色块" (swatch)
+*/
+.color-picker-native-input::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-picker-native-input::-webkit-color-swatch {
+  /* 给色块本身一个边框，使其在白色背景下更明显 */
+  border: 1px solid #888;
+  border-radius: 3px;
+}
+
+/* 美化 Firefox 浏览器的色块
+*/
+.color-picker-native-input::-moz-color-swatch {
+  border: 1px solid #888;
+  border-radius: 3px;
+}

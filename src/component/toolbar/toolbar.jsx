@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 import './toolbar.css';
 import { Geometric } from '../Geometric/Geometric.jsx';
 import { Undo } from '../Undo/Undo.jsx';
+import GetColorTool from '../getColorTool/getColorTool.jsx';
 
 const shapeMap = {
     'rectangle': '矩形',
     'circle': '圆形',
 };
 
-const Toolbar = ({ onToolChange, onClear, currentTool,onUndo }) => {
+const Toolbar = ({ onToolChange, onClear, currentTool,onUndo,currentColor, 
+    onColorChange}) => {
   
 // 使用 Geometric.getCurrentShape() 来获取初始值
   const [currentShapeName, setCurrentShapeName] = useState(shapeMap[Geometric.getCurrentShape()]);
@@ -46,6 +48,12 @@ const Toolbar = ({ onToolChange, onClear, currentTool,onUndo }) => {
       >
         {`几何图形 (${currentShapeName})`}
       </button>
+
+      {/* 取色器 */}
+      <GetColorTool 
+        currentColor={currentColor}
+        onColorChange={onColorChange}
+      />
 
 
       {/* 撤销  */}
