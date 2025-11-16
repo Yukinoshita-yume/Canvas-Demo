@@ -1,0 +1,10 @@
+/* tempboard.css */
+.temp-drawing-board {
+  position: absolute; /* 绝对定位，以便覆盖主画布 */
+  top: 0;
+  left: 0;
+  cursor: crosshair; /* 绘图时通常使用十字光标 */
+  /* 背景透明，确保能看到主画布 */
+  background-color: transparent; 
+  touch-action: none;
+}
