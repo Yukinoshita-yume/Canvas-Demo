@@ -7,6 +7,7 @@
   border-radius: 8px;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: relative; /* 确保下拉菜单可以相对于工具栏定位 (可选, 视布局而定) */
 }
 
 .tool-button {
@@ -16,6 +17,7 @@
   background-color: #f9f9f9;
   cursor: pointer;
   transition: background-color 0.2s, border-color 0.2s;
+  white-space: nowrap; /* 防止按钮内文本换行 */
 }
 
 .tool-button:hover:not(:disabled) {
@@ -41,4 +43,71 @@
 
 .clear-button:hover {
   background-color: #c82333;
+}
+
+/* --- 下拉菜单样式 --- */
+.dropdown-container {
+    position: relative; 
+    display: inline-block; 
+}
+
+.dropdown-menu {
+    /* 基础样式 */
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    z-index: 1000;
+    padding: 0; /* 初始 padding 设为 0 */
+    margin-top: 5px; 
+    min-width: 120px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* 关键：隐藏超出 max-height 的内容 */
+
+    /* 动画控制 */
+    max-height: 0; /* 默认隐藏 */
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s;
+}
+
+/* 当菜单被激活时 */
+.dropdown-menu.show {
+    max-height: 500px; /* 关键：设置一个足够大的值，使其展开 */
+    opacity: 1;
+    visibility: visible;
+    padding: 5px 0; /* 展开后设置内边距 */
+}
+
+/* 悬停时显示下拉菜单 */
+.dropdown-container:hover .dropdown-menu {
+    display: block;
+}
+
+/* 下拉菜单中的选项样式 */
+.dropdown-item {
+    padding: 8px 15px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-item.active-item {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* 笔刷和粗细选择器的分组样式 (可选) */
+.menu-section-title {
+    padding: 5px 15px;
+    font-size: 0.8em;
+    color: #666;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
 }
