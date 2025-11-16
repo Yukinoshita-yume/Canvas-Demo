@@ -5,6 +5,7 @@ import { Pencil } from '../pencil/pencil.jsx';
 import { Geometric } from '../Geometric/Geometric.jsx';
 import { Undo } from '../Undo/Undo.jsx';
 import TempBoard from '../tempboard/tempboard.jsx';
+import { Eraser } from '../eraser/eraser.jsx';
 
 import './board.css';
 
@@ -68,7 +69,19 @@ const Board = () => {
   // 绘图处理函数
   const drawHandler = useCallback((event) => {
 
-    if (!ctx || !tempCtx || !isDrawing) return;
+    if (!ctx || !tempCtx || !isDrawing) {
+        // 【建议】如果未按下鼠标 (isDrawing 为 false)，
+        // 并且工具是橡皮擦，也应该允许执行预览
+        if (!isDrawing && currentTool === 'eraser' && tempCtx) {
+            const canvas = canvasRef.current;
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            Eraser.preview(tempCtx, x, y, canvasSize); // 仅执行预览
+        }
+        return; // 如果 isDrawing 为 false (且不是橡皮擦预览)，则返回
+    }
+    
 
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
@@ -85,6 +98,20 @@ const Board = () => {
 
       //在临时画布上绘制形状
       Geometric.draw(tempCtx, x, y, currentColor); 
+    }else if (currentTool === 'eraser') { 
+      if (isDrawing) {
+        // 鼠标按下时：
+        // 1. 在主画布上擦除 (保持不变)
+        Eraser.draw(ctx, x, y);
+        
+        // 2. 【修改点】同时在临时画布上绘制预览
+        Eraser.preview(tempCtx, x, y, canvasSize); 
+        
+      } else {
+        // 鼠标悬停时：
+        // (此分支现在由函数顶部的检查处理)
+        // Eraser.preview(tempCtx, x, y, canvasSize); 
+      }
     }
    
   }, [ctx, tempCtx, isDrawing, currentTool, canvasSize,currentColor]); // 添加依赖项
@@ -107,6 +134,8 @@ const Board = () => {
       Pencil.draw(ctx, x, y);  // 铅笔立即绘制第一个点
     } else if (currentTool === 'geometric') {
       Geometric.start(tempCtx, x, y, currentColor); // 在临时画布上开始
+    }else if (currentTool === 'eraser') { // <--- 新增
+      Eraser.start(ctx, x, y); // 在主画布上开始擦除
     }
   };
 
@@ -128,7 +157,11 @@ const Board = () => {
       
       // 8c. 在主画布 (ctx) 上绘制最终形状
       Geometric.draw(ctx, x, y, currentColor);
+    }else if (currentTool === 'eraser') { // <--- 新增
+      Eraser.stop(ctx); // 结束橡皮擦操作，恢复 ctx
     }
+
+    tempCtx.clearRect(0, 0, canvasSize.width, canvasSize.height);
 
     // ---------------------------------------------
     // 9. 统一保存撤销状态 (对铅笔和几何图形都有效)
@@ -172,6 +205,9 @@ const Board = () => {
 
   const handleToolChange = (tool) => {
     setCurrentTool(tool);
+    if (tempCtx) {
+        tempCtx.clearRect(0, 0, canvasSize.width, canvasSize.height);
+    }
   };
 
   return (
