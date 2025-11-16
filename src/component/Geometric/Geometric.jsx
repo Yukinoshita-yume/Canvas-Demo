@@ -36,8 +36,9 @@ export const Geometric = {
     ctx.beginPath();
   },
   
-  // 鼠标移动时调用：实时绘制预览
-  draw: (ctx, currentX, currentY, canvas) => {
+  // 鼠标移动时调用：在指定 context 上绘制形状
+  // (不再清除画布)
+  draw: (ctx, currentX, currentY) => {
     const width = currentX - startX;
     const height = currentY - startY;
    
@@ -45,8 +46,9 @@ export const Geometric = {
     ctx.strokeStyle = '#0000ff'; 
     ctx.lineWidth = 2;  
     ctx.beginPath(); //重新开始路径
-    // 清空画布，防止拖拽痕迹
-        ctx.clearRect(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
+    // ---------------------------------------------
+    // 移除了 ctx.clearRect()
+    // ---------------------------------------------
 
     if (currentShape === 'rectangle') {
       ctx.rect(startX, startY, width, height);
