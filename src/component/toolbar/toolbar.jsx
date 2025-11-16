@@ -2,13 +2,14 @@
 import React, { useState } from 'react';
 import './toolbar.css';
 import { Geometric } from '../Geometric/Geometric.jsx';
+import { Undo } from '../Undo/Undo.jsx';
 
 const shapeMap = {
     'rectangle': '矩形',
     'circle': '圆形',
 };
 
-const Toolbar = ({ onToolChange, onClear, currentTool }) => {
+const Toolbar = ({ onToolChange, onClear, currentTool,onUndo }) => {
   
 // 使用 Geometric.getCurrentShape() 来获取初始值
   const [currentShapeName, setCurrentShapeName] = useState(shapeMap[Geometric.getCurrentShape()]);
@@ -50,8 +51,7 @@ const Toolbar = ({ onToolChange, onClear, currentTool }) => {
       {/* 撤销  */}
       <button 
         className="tool-button" 
-        onClick={() => console.log('Undo feature placeholder')}
-        disabled
+        onClick={onUndo} 
       >
         撤销
       </button>
