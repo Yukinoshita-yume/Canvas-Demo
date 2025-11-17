@@ -6,6 +6,7 @@ import { Geometric } from '../Geometric/Geometric.jsx';
 import { Undo } from '../Undo/Undo.jsx';
 import TempBoard from '../tempboard/tempboard.jsx';
 import { Eraser } from '../eraser/eraser.jsx';
+import { Save } from '../save/save.jsx';
 
 import './board.css';
 
@@ -176,6 +177,13 @@ const Board = () => {
 
   // --- 工具栏功能 ---
 
+  const handleSave = () => { // <--- 新增
+    if (canvasRef.current) {
+      // 调用 Save 工具函数，传入主画布元素
+      Save.saveAsPNG(canvasRef.current, 'my_drawing.png');
+    }
+  };
+
 
   // 新增颜色处理函数
   const handleColorChange = (newColor) => {
@@ -218,7 +226,8 @@ const Board = () => {
         currentTool={currentTool}
         onUndo={handleUndo}
         currentColor={currentColor}
-        onColorChange={handleColorChange}    
+        onColorChange={handleColorChange} 
+        onSave={handleSave}   
       />
       {/* --------------------------------------------- */}
       {/* 10. 使用相对定位的 wrapper 包裹两个画布 */}
