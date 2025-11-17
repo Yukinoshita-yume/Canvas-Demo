@@ -29,6 +29,7 @@ const Board = () => {
   const [canUndo, setCanUndo] = useState(false);
 
   const [currentColor, setCurrentColor] = useState('#000000'); 
+  const [currentStrokeWidth, setCurrentStrokeWidth] = useState(2);
 
  
   // 初始化 Canvas Context
@@ -132,7 +133,7 @@ const Board = () => {
     // 7. 根据工具选择 Ctx
     // ---------------------------------------------
     if (currentTool === 'pencil') {
-      Pencil.start(ctx, x, y, currentColor); // 在主画布上开始
+      Pencil.start(ctx, x, y, currentColor, currentStrokeWidth); // 在主画布上开始
       Pencil.draw(ctx, x, y);  // 铅笔立即绘制第一个点
     } else if (currentTool === 'geometric') {
       Geometric.start(tempCtx, x, y, currentColor); // 在临时画布上开始
@@ -177,6 +178,14 @@ const Board = () => {
   };
 
   // --- 工具栏功能 ---
+
+  const handleStrokeWidthChange = (newWidth) => {
+    // 确保宽度是数字
+    const width = typeof newWidth === 'string' ? parseFloat(newWidth) : newWidth;
+    if (!isNaN(width)) {
+        setCurrentStrokeWidth(width);
+    }
+  };
 
 
   const handleImport = async () => { // <--- 新增
@@ -256,6 +265,8 @@ const Board = () => {
         onColorChange={handleColorChange} 
         onSave={handleSave} 
         onImport={handleImport}  
+        currentStrokeWidth={currentStrokeWidth}
+        onStrokeWidthChange={handleStrokeWidthChange}
       />
       {/* --------------------------------------------- */}
       {/* 10. 使用相对定位的 wrapper 包裹两个画布 */}
