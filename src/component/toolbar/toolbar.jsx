@@ -14,6 +14,13 @@ const strokeWidths = [1, 5, 10];
 const shapeMap = {
     'rectangle': '矩形',
     'circle': '圆形',
+    'square': '正方形',
+    'line': '直线',
+    'triangle': '三角形',
+    'trapezoid': '梯形',
+    'parallelogram': '平行四边形',
+    'heart': '爱心',
+    'arrow': '箭头'
 };
 
 // 假设外部组件支持 onBrushChange, onStrokeWidthChange
