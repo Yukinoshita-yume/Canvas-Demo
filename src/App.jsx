@@ -7,7 +7,6 @@ import Document from './component/document/document.jsx'
 import Board from './component/board/board.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className="App">

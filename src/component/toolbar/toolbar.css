@@ -2,7 +2,7 @@
 .toolbar {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   padding: 10px;
   border-radius: 8px;
   background-color: #ffffff;
@@ -25,9 +25,9 @@
 }
 
 .tool-button.active {
-  background-color: #007bff;
+  background-color: #F0D8EE;
   color: white;
-  border-color: #007bff;
+  border-color: #F0D8EE;
 }
 
 .tool-button:disabled {

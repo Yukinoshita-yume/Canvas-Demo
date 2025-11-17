@@ -26,7 +26,7 @@ const Board = () => {
   // 3. 为临时画布创建 Context 和尺寸状态
   // ---------------------------------------------
   const [tempCtx, setTempCtx] = useState(null);
-  const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
+  const [canvasSize, setCanvasSize] = useState({ width: 100, height: 100 });
   const [canUndo, setCanUndo] = useState(false);
 
   const [currentColor, setCurrentColor] = useState('#000000'); 
@@ -279,7 +279,7 @@ const Board = () => {
       {/* --------------------------------------------- */}
       {/* 10. 使用相对定位的 wrapper 包裹两个画布 */}
       {/* --------------------------------------------- */}
-      <div style={{ position: 'relative', width: `${canvasSize.width}px`, height: `${canvasSize.height}px` }}>
+      <div className="canvas-box">
         <canvas
           ref={canvasRef}
           className="drawing-board"
@@ -289,6 +289,8 @@ const Board = () => {
           ref={tempCanvasRef}
           width={canvasSize.width}
           height={canvasSize.height}
+          margin= {0}
+          padding= {0}
           onMouseDown={startDrawing}
           onMouseUp={stopDrawing}
           onMouseLeave={stopDrawing}
