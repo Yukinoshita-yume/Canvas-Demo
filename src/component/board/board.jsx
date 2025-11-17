@@ -7,6 +7,7 @@ import { Undo } from '../Undo/Undo.jsx';
 import TempBoard from '../tempboard/tempboard.jsx';
 import { Eraser } from '../eraser/eraser.jsx';
 import { Save } from '../save/save.jsx';
+import { Import } from '../import/import.jsx';
 
 import './board.css';
 
@@ -177,6 +178,32 @@ const Board = () => {
 
   // --- 工具栏功能 ---
 
+
+  const handleImport = async () => { // <--- 新增
+    if (!ctx) return;
+
+    // 1. 选择文件
+    const file = await Import.selectFile();
+    
+    if (file) {
+      // 2. 加载图片并绘制
+      const success = await Import.loadImageAndDraw(
+        file, 
+        ctx, 
+        canvasSize.width, 
+        canvasSize.height
+      );
+
+      if (success) {
+        // 3. 绘制成功后保存撤销状态
+        setTimeout(() => {
+            Undo.saveState(canvasRef.current);
+            setCanUndo(Undo.canUndo());
+        }, 0);
+      }
+    }
+  };
+
   const handleSave = () => { // <--- 新增
     if (canvasRef.current) {
       // 调用 Save 工具函数，传入主画布元素
@@ -227,7 +254,8 @@ const Board = () => {
         onUndo={handleUndo}
         currentColor={currentColor}
         onColorChange={handleColorChange} 
-        onSave={handleSave}   
+        onSave={handleSave} 
+        onImport={handleImport}  
       />
       {/* --------------------------------------------- */}
       {/* 10. 使用相对定位的 wrapper 包裹两个画布 */}

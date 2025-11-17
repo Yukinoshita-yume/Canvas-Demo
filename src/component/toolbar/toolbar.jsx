@@ -19,7 +19,7 @@ const shapeMap = {
 // 假设外部组件支持 onBrushChange, onStrokeWidthChange
 const Toolbar = ({ onToolChange, onClear, currentTool, onUndo, currentColor, onColorChange, 
     onBrushChange, currentBrush, onStrokeWidthChange, currentStrokeWidth,
-  onSave }) => {
+  onSave, onImport }) => {
   
   const [currentShapeName, setCurrentShapeName] = useState(shapeMap[Geometric.getCurrentShape()]);
   // 判断工具是否激活
@@ -129,14 +129,6 @@ const Toolbar = ({ onToolChange, onClear, currentTool, onUndo, currentColor, onC
         撤销
       </button>
       
-      {/* 新增空壳按钮：填充 */}
-      <button 
-        className={`tool-button ${isActive('fill')}`} 
-        onClick={() => onToolChange('fill')}
-      >
-        填充
-      </button>
-      
       <button 
         className="tool-button" 
         onClick={onSave} // <--- 调用传入的 onSave 函数
@@ -144,10 +136,9 @@ const Toolbar = ({ onToolChange, onClear, currentTool, onUndo, currentColor, onC
         保存
       </button>
       
-      {/* 新增空壳按钮：导入 */}
       <button 
         className="tool-button" 
-        onClick={() => console.log('导入功能待实现')}
+        onClick={onImport} // <--- 调用传入的 onImport 函数
       >
         导入
       </button>
