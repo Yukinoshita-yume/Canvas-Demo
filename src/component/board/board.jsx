@@ -8,6 +8,7 @@ import TempBoard from '../tempboard/tempboard.jsx';
 import { Eraser } from '../eraser/eraser.jsx';
 import { Save } from '../save/save.jsx';
 import { Import } from '../import/import.jsx';
+import { Gradient } from '../gradient/gradient.jsx'; // 假设路径为 '../gradient/gradient.jsx'
 
 import './board.css';
 
@@ -94,6 +95,8 @@ const Board = () => {
     if (currentTool === 'pencil') {
       Pencil.draw(ctx, x, y); // 在主画布上绘制
 
+    }else if (currentTool === 'gradient') {
+      Gradient.draw(ctx, x, y); // 在主画布上绘制 
     } else if (currentTool === 'geometric') {
       
       // 清除临时画布 (使用存储的逻辑尺寸)
@@ -135,7 +138,12 @@ const Board = () => {
     if (currentTool === 'pencil') {
       Pencil.start(ctx, x, y, currentColor, currentStrokeWidth); // 在主画布上开始
       Pencil.draw(ctx, x, y);  // 铅笔立即绘制第一个点
-    } else if (currentTool === 'geometric') {
+    } else if (currentTool === 'gradient') { // 【新增】渐变笔刷开始
+      // 渐变笔刷使用当前的粗细和颜色设置 (尽管它会覆盖颜色)
+      Gradient.start(ctx, x, y, currentColor, currentStrokeWidth); 
+      Gradient.draw(ctx, x, y); // 立即绘制第一个点
+      
+    }else if (currentTool === 'geometric') {
       Geometric.start(tempCtx, x, y, currentColor); // 在临时画布上开始
     }else if (currentTool === 'eraser') { // <--- 新增
       Eraser.start(ctx, x, y); // 在主画布上开始擦除

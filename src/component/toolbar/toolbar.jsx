@@ -8,7 +8,7 @@ import { Undo } from '../Undo/Undo.jsx';
 import GetColorTool from '../getColorTool/getColorTool.jsx';
 
 // 假设的笔刷类型和粗细值
-const brushTypes = ['default', 'chalk', 'spray'];
+const brushTypes = ['pencil', 'gradient'];
 const strokeWidths = [1, 5, 10]; 
 
 const shapeMap = {
@@ -42,16 +42,18 @@ const Toolbar = ({ onToolChange, onClear, currentTool, onUndo, currentColor, onC
 
   // 笔刷类型切换逻辑
   const handleBrushTypeChange = (brushType) => {
-    // 切换到铅笔工具
-    onToolChange('pencil'); 
+    if (brushType === 'gradient') { // 【新增】如果是渐变笔刷
+        onToolChange('gradient'); // 切换工具为 'gradient'
+    } else {
+        // 否则切换到铅笔工具
+        onToolChange('pencil'); 
+    }
     // 调用外部传入的笔刷切换方法
     if (onBrushChange) onBrushChange(brushType); 
   };
   
   // 笔刷粗细切换逻辑
   const handleStrokeWidthChange = (width) => {
-    // 切换到铅笔工具
-    onToolChange('pencil'); 
     // 调用外部传入的粗细切换方法
     if (onStrokeWidthChange) onStrokeWidthChange(width); 
   };
@@ -68,26 +70,35 @@ const Toolbar = ({ onToolChange, onClear, currentTool, onUndo, currentColor, onC
     <div className="toolbar">
       {/* 铅笔/笔刷工具 - 使用 DropdownButton */}
       <DropdownButton
-        buttonText="铅笔"
-        isActive={isActive('pencil')}
-        onClick={() => onToolChange('pencil')}
-        currentItemText={currentBrush} // 显示当前笔刷类型
+        buttonText={currentTool === 'gradient' ? '渐变笔刷' : '铅笔'} 
+        isActive={isActive('pencil') || isActive('gradient')}
+        onClick={() => {
+             // 【修改点 2: 仅在非笔刷工具时，才切换到铅笔】
+             if (!isActive('pencil') && !isActive('gradient')) {
+                 onToolChange('pencil');
+             }
+        }}
+        currentItemText={currentTool === 'gradient' ? '渐变笔刷' : currentBrush} 
       >
         <div className="menu-section-title">笔刷类型</div>
         {brushTypes.map(brush => (
           <div 
             key={brush}
-            className={`dropdown-item ${currentBrush === brush ? 'active-item' : ''}`}
+            // 笔刷类型激活状态判断不变
+            className={`dropdown-item ${(currentTool === 'gradient' && brush === 'gradient') || (currentTool === 'pencil' && currentBrush === brush) ? 'active-item' : ''}`}
             onClick={() => handleBrushTypeChange(brush)}
           >
-            {brush}
+            {brush === 'gradient' ? '渐变笔刷' : brush}
           </div>
         ))}
         <div className="menu-section-title">粗细</div>
+        
         {strokeWidths.map(width => (
           <div 
             key={width}
-            className={`dropdown-item ${currentStrokeWidth === width ? 'active-item' : ''}`}
+            // 【修改点 3: 统一粗细激活状态显示】
+            // 只要当前工具是笔刷（pencil 或 gradient），就根据 currentStrokeWidth 来判断是否激活。
+            className={`dropdown-item ${(isActive('pencil') || isActive('gradient')) && currentStrokeWidth === width ? 'active-item' : ''}`}
             onClick={() => handleStrokeWidthChange(width)}
           >
             {width} px
