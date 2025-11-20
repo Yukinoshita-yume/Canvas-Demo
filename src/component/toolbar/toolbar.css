@@ -25,9 +25,9 @@
 }
 
 .tool-button.active {
-  background-color: #F0D8EE;
+  background-color: #18ce79;
   color: white;
-  border-color: #F0D8EE;
+  border-color: #18ce79;
 }
 
 .tool-button:disabled {

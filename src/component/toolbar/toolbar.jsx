@@ -12,15 +12,15 @@ const brushTypes = ['pencil', 'gradient'];
 const strokeWidths = [1, 5, 10]; 
 
 const shapeMap = {
-    'rectangle': '矩形',
-    'circle': '圆形',
-    'square': '正方形',
-    'line': '直线',
-    'triangle': '三角形',
-    'trapezoid': '梯形',
-    'parallelogram': '平行四边形',
-    'heart': '爱心',
-    'arrow': '箭头'
+    'rectangle': 'rectangle',
+    'circle': 'circle',
+    'square': 'square',
+    'line': 'line',
+    'triangle': 'triangle',
+    'trapezoid': 'trapezoid',
+    'parallelogram': 'parallelogram',
+    'heart': 'heart',
+    'arrow': 'arrow'
 };
 
 // 假设外部组件支持 onBrushChange, onStrokeWidthChange
@@ -70,7 +70,7 @@ const Toolbar = ({ onToolChange, onClear, currentTool, onUndo, currentColor, onC
     <div className="toolbar">
       {/* 铅笔/笔刷工具 - 使用 DropdownButton */}
       <DropdownButton
-        buttonText={currentTool === 'gradient' ? '渐变笔刷' : '铅笔'} 
+        buttonText={currentTool === 'gradient' ? 'gradient' : 'pencil'} 
         isActive={isActive('pencil') || isActive('gradient')}
         onClick={() => {
              // 【修改点 2: 仅在非笔刷工具时，才切换到铅笔】
@@ -78,9 +78,9 @@ const Toolbar = ({ onToolChange, onClear, currentTool, onUndo, currentColor, onC
                  onToolChange('pencil');
              }
         }}
-        currentItemText={currentTool === 'gradient' ? '渐变笔刷' : currentBrush} 
+        currentItemText={currentTool === 'gradient' ? 'gradient' : currentBrush} 
       >
-        <div className="menu-section-title">笔刷类型</div>
+        <div className="menu-section-title">Brush type</div>
         {brushTypes.map(brush => (
           <div 
             key={brush}
@@ -88,10 +88,10 @@ const Toolbar = ({ onToolChange, onClear, currentTool, onUndo, currentColor, onC
             className={`dropdown-item ${(currentTool === 'gradient' && brush === 'gradient') || (currentTool === 'pencil' && currentBrush === brush) ? 'active-item' : ''}`}
             onClick={() => handleBrushTypeChange(brush)}
           >
-            {brush === 'gradient' ? '渐变笔刷' : brush}
+            {brush === 'gradient' ? 'gradient' : brush}
           </div>
         ))}
-        <div className="menu-section-title">粗细</div>
+        <div className="menu-section-title">Stroke width</div>
         
         {strokeWidths.map(width => (
           <div 
@@ -108,7 +108,7 @@ const Toolbar = ({ onToolChange, onClear, currentTool, onUndo, currentColor, onC
 
       {/* 几何图形工具 - 使用 DropdownButton */}
       <DropdownButton
-        buttonText="几何图形"
+        buttonText="Geometric"
         isActive={isActive('geometric')}
         onClick={handleGeometricClick} // 点击切换工具，但形状通过菜单切换
         currentItemText={currentShapeName}
@@ -136,7 +136,7 @@ const Toolbar = ({ onToolChange, onClear, currentTool, onUndo, currentColor, onC
         className={`tool-button ${isActive('eraser')}`} 
         onClick={() => onToolChange('eraser')}
       >
-        橡皮擦
+        Eraser
       </button>
 
       {/* 撤销（保持不变） */}
@@ -144,21 +144,21 @@ const Toolbar = ({ onToolChange, onClear, currentTool, onUndo, currentColor, onC
         className="tool-button" 
         onClick={onUndo} 
       >
-        撤销
+        Undo
       </button>
       
       <button 
         className="tool-button" 
         onClick={onSave} // <--- 调用传入的 onSave 函数
       >
-        保存
+        Save
       </button>
       
       <button 
         className="tool-button" 
         onClick={onImport} // <--- 调用传入的 onImport 函数
       >
-        导入
+        Import
       </button>
 
       {/* 一键清除（保持不变） */}
@@ -166,7 +166,7 @@ const Toolbar = ({ onToolChange, onClear, currentTool, onUndo, currentColor, onC
         className="tool-button clear-button" 
         onClick={onClear}
       >
-        一键清除
+        Clear All
       </button>
     </div>
   );
