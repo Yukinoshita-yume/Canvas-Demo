@@ -8,7 +8,8 @@ import TempBoard from '../tempboard/tempboard.jsx';
 import { Eraser } from '../eraser/eraser.jsx';
 import { Save } from '../save/save.jsx';
 import { Import } from '../import/import.jsx';
-import { Gradient } from '../gradient/gradient.jsx'; // 假设路径为 '../gradient/gradient.jsx'
+import { Gradient } from '../gradient/gradient.jsx'; 
+import Title from '../title/title.jsx';
 
 import './board.css';
 
@@ -264,20 +265,27 @@ const Board = () => {
 
   return (
     <div className="board-container">
-      <Toolbar 
-        onToolChange={handleToolChange} 
-        onClear={handleClear} 
-        currentTool={currentTool}
-        onUndo={handleUndo}
-        currentColor={currentColor}
-        onColorChange={handleColorChange} 
-        onSave={handleSave} 
-        onImport={handleImport}  
-        currentStrokeWidth={currentStrokeWidth}
-        onStrokeWidthChange={handleStrokeWidthChange}
-      />
       {/* --------------------------------------------- */}
-      {/* 10. 使用相对定位的 wrapper 包裹两个画布 */}
+      {/* 新增 header 容器，用于放置 Title 和 Toolbar */}
+      {/* --------------------------------------------- */}
+      <div className="board-header"> 
+        <Title /> {/* <--- 渲染 Title */}
+        <Toolbar 
+          onToolChange={handleToolChange} 
+          onClear={handleClear} 
+          currentTool={currentTool}
+          onUndo={handleUndo}
+          currentColor={currentColor}
+          onColorChange={handleColorChange} 
+          onSave={handleSave} 
+          onImport={handleImport}  
+          currentStrokeWidth={currentStrokeWidth}
+          onStrokeWidthChange={handleStrokeWidthChange}
+        />
+      </div>
+      
+      {/* --------------------------------------------- */}
+      {/* 画布容器 */}
       {/* --------------------------------------------- */}
       <div className="canvas-box">
         <canvas

@@ -1,9 +1,22 @@
+/* title.css */
+/* title.css */
+/* title.css */
 .title{
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  font-size: 48px;
-  width: 100%;
-  height: 100px;
-  background-color: aquamarine;
+  font-size: 38px; /* 根据图片调整字体大小，使其更接近 */
+  font-weight: 600;
+  font-style: italic; /* <--- 新增: 斜体 */
+  margin: 0;
+  padding: 0 40px 0 15px;
+  color: white; /* <--- 修改: 字体颜色为白色 */
+  box-sizing: border-box;
+  white-space: nowrap;
+  
+  /* <--- 新增: 浅蓝色边缘/发光效果 */
+  text-shadow: 
+    0 0 5px rgb(18, 93, 206), /* 内发光 */
+    0 0 10px rgb(18, 93, 206), /* 外发光 */
+    0 0 15px rgb(18, 93, 206);
 }

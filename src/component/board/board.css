@@ -9,6 +9,19 @@
   padding: 0;
 }
 
+/* 标题和工具栏的容器 */
+.board-header {
+    width: 100%;
+    display: flex; /* 关键：使 Title 和 Toolbar 在同一行 */
+    justify-content: flex-start; /* 标题在左，工具栏紧随其后 */
+    align-items: center; /* 垂直居中对齐 */
+    background-color: #ffffff; /* 统一背景色 (与工具栏的默认背景一致) */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 添加阴影，视觉上更像一个整体 */
+    padding: 5px 0; /* 垂直内边距 */
+    box-sizing: border-box;
+}
+
+
 .drawing-board {
   border: none;
   background-color: white;
