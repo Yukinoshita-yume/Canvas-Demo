@@ -44,6 +44,7 @@
 - Code review is mandatory before merging.
 
 # <center>使用指南</center>
+- 小组7为“专题项目”课程数字画布项目制作的画布SketchLens
 - 在根目录执行npm install
 - 然后执行npm run dev
 - ps:如果实行npm install 遇到错误，请使用管理员权限再执行
