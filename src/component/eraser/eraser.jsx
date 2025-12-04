@@ -83,7 +83,7 @@ export const Eraser = {
   tempCtx.shadowBlur = 0;
   tempCtx.shadowColor = 'transparent';
 },
-  // 用于在 Board.jsx 中设置橡皮擦大小 (可选)
+  // 设置橡皮擦大小
   setSize: (size) => {
       brushSize = size;
   },

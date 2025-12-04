@@ -99,7 +99,7 @@ export const Import = {
         resolve(false);
       };
       
-      reader.readAsDataURL(file); // 开始读取文件
+      reader.readAsDataURL(file);
     });
   },
 };

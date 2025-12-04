@@ -5,7 +5,7 @@
  */
 let startX = 0;
 let startY = 0;
-let currentShape = 'rectangle'; // 默认是矩形
+let currentShape = 'rectangle';
 
 
 const drawHeart = (ctx, x, y, w, h) => {

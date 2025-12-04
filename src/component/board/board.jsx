@@ -68,7 +68,7 @@ const Board = () => {
           setCanUndo(Undo.canUndo());
       }, 0);
     } 
-  }, []); // 依赖项为空，仅运行一次
+  }, []);
 
   
   // 绘图处理函数
